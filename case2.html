@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Кейс 2 — Реструктуризация долга подрядчика: лизинг вместо кредита</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0d1b2a;--navy:#13293d;--slate:#3a5468;--mute:#6b7f8e;--line:#dfe5e8;
+    --paper:#fbfaf7;--card:#ffffff;--green:#1f6b4d;--green-soft:#e8f1ec;
+    --red:#9e2b25;--gold:#a8842c;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{background:#e9ebe5}
+  body{font-family:'IBM Plex Sans',sans-serif;color:var(--ink);background:#e9ebe5;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .page{width:880px;margin:0 auto;background:var(--paper);position:relative;overflow:hidden}
+  .hdr{background:linear-gradient(155deg,#0d1b2a 0%,#13293d 55%,#1b3a52 100%);color:#fff;padding:46px 56px 40px;position:relative;overflow:hidden}
+  .hdr::after{content:"";position:absolute;right:-80px;top:-80px;width:340px;height:340px;background:radial-gradient(circle,rgba(31,107,77,.35),transparent 70%)}
+  .hdr::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--green)}
+  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:#7fb3a0;font-weight:500;margin-bottom:18px;display:flex;align-items:center;gap:14px}
+  .eyebrow span{height:1px;width:38px;background:#3f6e5c;display:inline-block}
+  .hdr h1{font-family:'Fraunces',serif;font-weight:600;font-size:33px;line-height:1.18;letter-spacing:-.01em;max-width:700px;position:relative;z-index:2}
+  .hdr h1 em{font-style:italic;color:#8fcfb4}
+  .hdr .sub{margin-top:18px;font-size:14px;color:#b9c6cf;max-width:620px;position:relative;z-index:2}
+  .tagrow{margin-top:26px;display:flex;gap:10px;flex-wrap:wrap;position:relative;z-index:2}
+  .tag{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.06em;border:1px solid rgba(255,255,255,.22);border-radius:2px;padding:6px 11px;color:#cdd8df}
+  .body{padding:42px 56px 50px}
+  .section{margin-bottom:38px}
+  .sec-label{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--green);font-weight:600;margin-bottom:6px;display:flex;align-items:baseline;gap:10px}
+  .sec-label b{color:var(--mute);font-weight:500}
+  .sec-title{font-family:'Fraunces',serif;font-size:23px;font-weight:600;color:var(--ink);margin-bottom:16px;letter-spacing:-.01em}
+  p{font-size:14.5px;color:var(--slate);margin-bottom:11px}
+  p strong{color:var(--ink);font-weight:600}
+  .ab-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:7px;padding:22px 24px;box-shadow:0 1px 0 rgba(13,27,42,.03)}
+  .panel.a{border-top:3px solid var(--red)}
+  .panel.b{border-top:3px solid var(--green)}
+  .panel h3{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;font-weight:600}
+  .panel .big{font-family:'Fraunces',serif;font-size:15.5px;color:var(--ink);font-weight:500;line-height:1.4;margin-bottom:14px}
+  .kv{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;border-bottom:1px dotted var(--line);font-size:13.5px}
+  .kv:last-child{border-bottom:0}
+  .kv .k{color:var(--slate)}
+  .kv .v{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--ink)}
+  .steps{counter-reset:s;margin-top:6px}
+  .step{display:flex;gap:18px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .step:last-child{border-bottom:0}
+  .step .n{counter-increment:s;flex:0 0 34px;height:34px;border-radius:50%;background:var(--navy);color:#fff;font-family:'IBM Plex Mono',monospace;font-weight:600;display:flex;align-items:center;justify-content:center;font-size:14px}
+  .step .n::before{content:counter(s)}
+  .step .txt h4{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:4px}
+  .step .txt p{font-size:13.5px;margin-bottom:0}
+  /* comparison cards */
+  .cmp{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:6px}
+  .opt{border:1px solid var(--line);border-radius:7px;padding:18px 18px 20px;background:var(--card)}
+  .opt.win{border:1.5px solid var(--green);background:var(--green-soft);box-shadow:0 6px 20px rgba(31,107,77,.10)}
+  .opt .name{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:600;margin-bottom:4px}
+  .opt.win .name{color:var(--green)}
+  .opt .pick{font-size:10px;color:var(--green);font-weight:700;letter-spacing:.06em}
+  .opt .row{display:flex;justify-content:space-between;font-size:12.5px;padding:6px 0;border-bottom:1px dotted var(--line)}
+  .opt .row:last-child{border-bottom:0}
+  .opt .row .l{color:var(--slate)}
+  .opt .row .r{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--ink);text-align:right}
+  .yes{color:var(--green);font-weight:700}
+  .no{color:var(--red);font-weight:700}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:4px}
+  thead th{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:600;text-align:right;padding:11px 12px;border-bottom:2px solid var(--ink)}
+  thead th:first-child{text-align:left}
+  tbody td{padding:11px 12px;text-align:right;border-bottom:1px solid var(--line);font-family:'IBM Plex Mono',monospace}
+  tbody td:first-child{text-align:left;font-family:'IBM Plex Sans',sans-serif;color:var(--slate)}
+  tbody tr:last-child td{border-bottom:0}
+  .delta-pos{color:var(--green);font-weight:600}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:7px;overflow:hidden;margin-top:8px}
+  .kpi{background:var(--card);padding:20px 14px;text-align:center}
+  .kpi .num{font-family:'Fraunces',serif;font-size:27px;font-weight:600;color:var(--green);line-height:1}
+  .kpi .num.alt{color:var(--navy)}
+  .kpi .lbl{font-size:11px;color:var(--mute);margin-top:8px;line-height:1.35}
+  .concl{background:var(--navy);color:#dce6ec;border-radius:8px;padding:28px 30px;margin-top:8px;position:relative;overflow:hidden}
+  .concl::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--green)}
+  .concl h3{font-family:'Fraunces',serif;color:#fff;font-size:19px;font-weight:600;margin-bottom:14px}
+  .concl ul{list-style:none}
+  .concl li{padding:7px 0 7px 26px;position:relative;font-size:14px;border-bottom:1px solid rgba(255,255,255,.08)}
+  .concl li:last-child{border-bottom:0}
+  .concl li::before{content:"→";position:absolute;left:0;color:#8fcfb4;font-weight:700}
+  .concl li b{color:#fff}
+  .role{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:0 6px 6px 0;padding:16px 20px;margin-top:24px;font-size:13.5px;color:var(--slate)}
+  .role b{color:var(--ink)}
+  .note{font-size:12px;color:var(--mute);margin-top:14px;line-height:1.5;font-style:italic}
+  .ftr{display:flex;justify-content:space-between;align-items:center;padding:22px 56px;background:#0d1b2a;color:#7e93a0;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.05em}
+  .ftr .brand{color:#cdd8df;font-weight:600;letter-spacing:.18em}
+  .nda{font-size:11px;color:var(--mute);font-style:italic;margin-top:18px;font-family:'IBM Plex Sans',sans-serif}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="hdr">
+    <div class="eyebrow"><span></span>Кейс 02 · Корпоративное финансирование · Строительство</div>
+    <h1>Реструктуризация проблемного долга подрядчика: <em>лизинг вместо кредита</em> снял риск зависания капитала и ускорил налоговый щит</h1>
+    <div class="sub">Реструктуризация кредитного портфеля федерального подрядчика и переход на лизинг при закупке спецтехники — решение боли с «мёртвым» парком и оптимизация налоговой нагрузки.</div>
+    <div class="tagrow">
+      <div class="tag">Кредитный анализ</div>
+      <div class="tag">Реструктуризация</div>
+      <div class="tag">Лизинг</div>
+      <div class="tag">Налоговое планирование</div>
+    </div>
+  </header>
+
+  <div class="body">
+
+    <div class="section">
+      <div class="sec-label">01 <b>/ Ситуация</b></div>
+      <div class="sec-title">Федеральный подрядчик с «зависающим» парком техники</div>
+      <p>Крупный федеральный подрядчик по фундаментным работам — лидер сегмента: 20–30 контрактов в год по регионам РФ, выручка ~10 млрд ₽, крупнейший в стране парк установок струйной цементации грунтов.</p>
+      <p><strong>Проблема:</strong> под каждый контракт регулярно закупается спецтехника широкого профиля. По завершении контракта переброска часто экономически нецелесообразна — техника либо продаётся, либо «висит» на балансе и через несколько лет списывается. Около <strong>30% парка не находит дальнейшего применения</strong> — капитал замораживается в активах, которые не приносят дохода.</p>
+    </div>
+
+    <div class="section">
+      <div class="ab-grid">
+        <div class="panel a">
+          <h3>Точка А · 01.01.2025</h3>
+          <div class="big">Закупка техники в кредит и за наличные, риск зависания капитала</div>
+          <div class="kv"><span class="k">Техника на балансе</span><span class="v">~700 млн ₽</span></div>
+          <div class="kv"><span class="k">Не находит применения (~30%)</span><span class="v">~210 млн ₽</span></div>
+          <div class="kv"><span class="k">Лизинг в структуре закупок</span><span class="v">0 ₽</span></div>
+          <div class="kv"><span class="k">Debt / EBITDA LTM</span><span class="v">1,9</span></div>
+        </div>
+        <div class="panel b">
+          <h3>Точка Б · после реструктуризации</h3>
+          <div class="big">Долг реструктурирован, новая техника — в лизинг, операционка без просрочек</div>
+          <div class="kv"><span class="k">Новая закупка через лизинг</span><span class="v">350 млн ₽</span></div>
+          <div class="kv"><span class="k">Отсрочка ближайших платежей</span><span class="v">3 месяца</span></div>
+          <div class="kv"><span class="k">Просрочки по долгу</span><span class="v">нет</span></div>
+          <div class="kv"><span class="k">Гибкость парка</span><span class="v">возврат техники</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="sec-label">02 <b>/ Решение</b></div>
+      <div class="sec-title">Что было сделано</div>
+      <div class="steps">
+        <div class="step"><div class="n"></div><div class="txt">
+          <h4>Полный кредитный анализ и реструктуризация портфеля</h4>
+          <p>Корректировка графика, удлинение периода выборки и периода погашения, защита на кредитном комитете — положительное решение. Клиенту дана отсрочка ближайших платежей на 3 месяца.</p>
+        </div></div>
+        <div class="step"><div class="n"></div><div class="txt">
+          <h4>Перевод закупки новой техники на лизинг</h4>
+          <p>Клиент рассматривал кредит или покупку за наличные. Обосновал и доказал преимущество лизинга для закупки на 350 млн ₽ (аванс 50 млн, обязательства 300 млн, ставка 17,5%, срок 5 лет).</p>
+        </div></div>
+        <div class="step"><div class="n"></div><div class="txt">
+          <h4>Заложена ускоренная амортизация предмета лизинга</h4>
+          <p>Применение к норме амортизации повышающего коэффициента (до 3) для лизингового имущества — расходы признаются раньше, налоговый щит приходит на старте, эффект во времени выше.</p>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="sec-label">03 <b>/ Сравнение вариантов</b></div>
+      <div class="sec-title">Лизинг против кредита и покупки за наличные</div>
+      <div class="cmp">
+        <div class="opt">
+          <div class="name">Кредит</div>
+          <div class="pick">&nbsp;</div>
+          <div class="row"><span class="l">Платёж / мес</span><span class="r">7,54 млн</span></div>
+          <div class="row"><span class="l">Налог. щит / 6 мес</span><span class="r">12,6 млн</span></div>
+          <div class="row"><span class="l">НДС к вычету</span><span class="r">70 млн сразу</span></div>
+          <div class="row"><span class="l">Отток капитала</span><span class="r">нет</span></div>
+          <div class="row"><span class="l">Возврат техники</span><span class="r"><span class="no">нет</span></span></div>
+        </div>
+        <div class="opt win">
+          <div class="name">Лизинг</div>
+          <div class="pick">★ РЕКОМЕНДОВАНО</div>
+          <div class="row"><span class="l">Платёж / мес</span><span class="r">7,54 млн</span></div>
+          <div class="row"><span class="l">Налог. щит / 6 мес</span><span class="r">18,75 млн</span></div>
+          <div class="row"><span class="l">НДС к вычету</span><span class="r">~9 млн равномерно</span></div>
+          <div class="row"><span class="l">Отток капитала</span><span class="r">нет</span></div>
+          <div class="row"><span class="l">Возврат техники</span><span class="r"><span class="yes">да</span></span></div>
+        </div>
+        <div class="opt">
+          <div class="name">Наличные</div>
+          <div class="pick">&nbsp;</div>
+          <div class="row"><span class="l">Платёж</span><span class="r">350 млн сразу</span></div>
+          <div class="row"><span class="l">Налог. щит / 6 мес</span><span class="r">6,25 млн</span></div>
+          <div class="row"><span class="l">НДС к вычету</span><span class="r">70 млн сразу</span></div>
+          <div class="row"><span class="l">Отток капитала</span><span class="r"><span class="no">350 млн</span></span></div>
+          <div class="row"><span class="l">Возврат техники</span><span class="r"><span class="no">нет</span></span></div>
+        </div>
+      </div>
+      <div class="note">Расчёт при ставке лизинга 17,5%, сроке 5 лет, налоге на прибыль 25% и ускоренной амортизации (коэф. 3) для предмета лизинга. Лизинговый платёж — аннуитет на сумму обязательств 300 млн ₽.</div>
+    </div>
+
+    <div class="section">
+      <div class="sec-label">04 <b>/ Эффект · первое полугодие</b></div>
+      <div class="sec-title">Финансовый результат выбора лизинга</div>
+      <div class="kpis">
+        <div class="kpi"><div class="num">+6,1</div><div class="lbl">Налоговый щит выше кредита, млн ₽ / полугодие</div></div>
+        <div class="kpi"><div class="num">−61</div><div class="lbl">НДС не «застрял» к возврату единовременно, млн ₽</div></div>
+        <div class="kpi"><div class="num alt">0</div><div class="lbl">Единовременного оттока капитала</div></div>
+        <div class="kpi"><div class="num">~210</div><div class="lbl">Капитала под риском зависания снято, млн ₽</div></div>
+      </div>
+      <table>
+        <thead><tr><th>Метрика</th><th>Кредит</th><th>Лизинг</th><th>Эффект</th></tr></thead>
+        <tbody>
+          <tr><td>Налоговый щит за полугодие</td><td>12,6 млн</td><td>18,75 млн</td><td class="delta-pos">+6,1 млн</td></tr>
+          <tr><td>НДС к вычету</td><td>70 млн сразу</td><td>~9 млн равномерно</td><td class="delta-pos">меньше внимания ФНС</td></tr>
+          <tr><td>Гибкость парка</td><td>на балансе</td><td>можно вернуть</td><td class="delta-pos">риск зависания снят</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="sec-label">05 <b>/ Итог</b></div>
+      <div class="concl">
+        <h3>Проблемный долг реструктурирован, финансирование парка переведено на здоровую модель</h3>
+        <ul>
+          <li><b>Снят риск дефолта:</b> график погашения реструктурирован, дана отсрочка на 3 месяца, операционная деятельность продолжена без просрочек</li>
+          <li><b>Налоговый щит больше и раньше:</b> +6,1 млн ₽ за полугодие против кредита за счёт ускоренной амортизации</li>
+          <li><b>НДС без рисков:</b> равномерный вычет (~9 млн вместо 70 млн сразу) — меньше внимания ФНС</li>
+          <li><b>Гибкость парка:</b> технику можно вернуть по завершении контракта — снят риск зависания капитала до ~210 млн ₽</li>
+        </ul>
+      </div>
+      <div class="role">
+        <b>Моя роль.</b> Кредитный анализ и реструктуризация портфеля, защита на кредитном комитете, финансовое обоснование выбора лизинга против кредита и наличных, расчёт налогового щита и НДС-эффекта, оценка влияния на структуру активов и долговую нагрузку.
+      </div>
+      <div class="nda">Данные обезличены и приведены в относительных/изменённых величинах в соответствии с требованиями конфиденциальности (NDA). Названия, география и абсолютные значения изменены без искажения сути кейса.</div>
+    </div>
+
+  </div>
+
+  <footer class="ftr">
+    <div class="brand">FINDIR.MOSKVA</div>
+    <div>Кредитный анализ · Реструктуризация · Налоговое планирование</div>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Портфолио · Кредитный анализ и реструктуризация</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0d1b2a;--navy:#13293d;--slate:#3a5468;--mute:#6b7f8e;--line:#dfe5e8;
+    --paper:#fbfaf7;--card:#ffffff;--green:#1f6b4d;--green-soft:#e8f1ec;
+    --red:#9e2b25;--gold:#a8842c;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{background:#e9ebe5}
+  body{font-family:'IBM Plex Sans',sans-serif;color:var(--ink);background:#e9ebe5;line-height:1.55;-webkit-font-smoothing:antialiased;padding:0 16px}
+  .wrap{width:100%;max-width:880px;margin:0 auto;background:var(--paper);min-height:100vh}
+  .hero{background:linear-gradient(155deg,#0d1b2a 0%,#13293d 55%,#1b3a52 100%);color:#fff;padding:64px 56px 56px;position:relative;overflow:hidden}
+  .hero::after{content:"";position:absolute;right:-90px;top:-90px;width:380px;height:380px;background:radial-gradient(circle,rgba(31,107,77,.35),transparent 70%)}
+  .hero::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--green)}
+  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:#7fb3a0;font-weight:500;margin-bottom:22px;display:flex;align-items:center;gap:14px}
+  .eyebrow span{height:1px;width:38px;background:#3f6e5c;display:inline-block}
+  .hero h1{font-family:'Fraunces',serif;font-weight:600;font-size:38px;line-height:1.15;letter-spacing:-.015em;max-width:660px;position:relative;z-index:2}
+  .hero h1 em{font-style:italic;color:#8fcfb4}
+  .hero .lead{margin-top:20px;font-size:15px;color:#b9c6cf;max-width:560px;position:relative;z-index:2}
+  .tagrow{margin-top:28px;display:flex;gap:10px;flex-wrap:wrap;position:relative;z-index:2}
+  .tag{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.06em;border:1px solid rgba(255,255,255,.22);border-radius:2px;padding:6px 11px;color:#cdd8df}
+  .cases{padding:48px 56px 30px}
+  .cases-label{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--green);font-weight:600;margin-bottom:22px}
+  a.case{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:9px;padding:26px 28px;margin-bottom:18px;transition:.2s;position:relative;overflow:hidden}
+  a.case::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--green);transform:scaleY(0);transform-origin:top;transition:.25s}
+  a.case:hover{border-color:var(--green);box-shadow:0 10px 30px rgba(13,27,42,.10);transform:translateY(-2px)}
+  a.case:hover::before{transform:scaleY(1)}
+  .case .num{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;color:var(--mute);font-weight:600;text-transform:uppercase}
+  .case h2{font-family:'Fraunces',serif;font-size:22px;font-weight:600;color:var(--ink);margin:8px 0 10px;line-height:1.25;letter-spacing:-.01em}
+  .case p{font-size:14px;color:var(--slate);margin-bottom:16px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .chip{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.05em;background:var(--green-soft);color:var(--green);border-radius:3px;padding:5px 9px;font-weight:600}
+  .arrow{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--green);font-weight:600}
+  .about{padding:8px 56px 50px}
+  .about-box{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:0 7px 7px 0;padding:22px 26px}
+  .about-box h3{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);font-weight:600;margin-bottom:12px}
+  .about-box p{font-size:14px;color:var(--slate)}
+  .about-box p strong{color:var(--ink)}
+  .ftr{display:flex;justify-content:space-between;align-items:center;padding:24px 56px;background:#0d1b2a;color:#7e93a0;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.05em;flex-wrap:wrap;gap:10px}
+  .ftr .brand{color:#cdd8df;font-weight:600;letter-spacing:.18em}
+  @media(max-width:620px){
+    .hero{padding:48px 28px 40px}.hero h1{font-size:28px}
+    .cases,.about{padding-left:28px;padding-right:28px}
+    .ftr{padding:22px 28px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow"><span></span>Портфолио · Корпоративное финансирование</div>
+    <h1>Кредитный анализ, <em>реструктуризация</em> и оптимизация финансирования</h1>
+    <div class="lead">Реальные кейсы перевода проблемной задолженности в здоровое обслуживание и оптимизации структуры финансирования для компаний МСБ и крупного бизнеса. Данные обезличены (NDA).</div>
+    <div class="tagrow">
+      <div class="tag">Кредитный анализ</div>
+      <div class="tag">Реструктуризация</div>
+      <div class="tag">Оборотный капитал</div>
+      <div class="tag">Налоговое планирование</div>
+    </div>
+  </header>
+
+  <section class="cases">
+    <div class="cases-label">Кейсы</div>
+
+    <a class="case" href="case1.html">
+      <div class="num">Кейс 01 · Производство · МСБ</div>
+      <h2>Реструктуризация инвесткредита нового производства: запасы −27%, выручка +14% за полугодие без новых кредитов</h2>
+      <p>Перевод проблемного инвестиционного кредита в здоровое обслуживание и высвобождение оборотного капитала на старте производства — через реструктуризацию графика и факторинг с регрессом.</p>
+      <div class="chips">
+        <span class="chip">Реструктуризация</span>
+        <span class="chip">Факторинг</span>
+        <span class="chip">Оборотный капитал</span>
+        <span class="arrow">Открыть →</span>
+      </div>
+    </a>
+
+    <a class="case" href="case2.html">
+      <div class="num">Кейс 02 · Строительство</div>
+      <h2>Реструктуризация проблемного долга подрядчика: лизинг вместо кредита снял риск зависания капитала и ускорил налоговый щит</h2>
+      <p>Реструктуризация кредитного портфеля федерального подрядчика и переход на лизинг при закупке спецтехники — решение боли с «мёртвым» парком и оптимизация налоговой нагрузки.</p>
+      <div class="chips">
+        <span class="chip">Реструктуризация</span>
+        <span class="chip">Лизинг</span>
+        <span class="chip">Налоговый щит</span>
+        <span class="arrow">Открыть →</span>
+      </div>
+    </a>
+  </section>
+
+  <section class="about">
+    <div class="about-box">
+      <h3>О подходе</h3>
+      <p>Сильная сторона — <strong>взгляд банкира с мышлением финансового директора бизнеса</strong>: не просто оценка заёмщика, а решение, которое снимает риск дефолта и одновременно работает на финансовое здоровье компании — баланс между ценой капитала, скоростью оборачиваемости и налоговой нагрузкой.</p>
+    </div>
+  </section>
+
+  <footer class="ftr">
+    <div class="brand">FINDIR.MOSKVA</div>
+    <div>Кредитный анализ · Реструктуризация · Корпоративные финансы</div>
+  </footer>
+
+</div>
+</body>
+</html>

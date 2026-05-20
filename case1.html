@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Кейс 1 — Реструктуризация инвесткредита нового производства</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0d1b2a;          /* near-black navy */
+    --navy:#13293d;
+    --slate:#3a5468;
+    --mute:#6b7f8e;
+    --line:#dfe5e8;
+    --paper:#fbfaf7;        /* warm paper */
+    --card:#ffffff;
+    --green:#1f6b4d;        /* deep institutional green */
+    --green-soft:#e8f1ec;
+    --red:#9e2b25;
+    --gold:#a8842c;
+    --accent:#13293d;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{background:#e9ebe5}
+  body{
+    font-family:'IBM Plex Sans',sans-serif;
+    color:var(--ink);
+    background:#e9ebe5;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .page{
+    width:880px;
+    margin:0 auto;
+    background:var(--paper);
+    position:relative;
+    overflow:hidden;
+  }
+  /* ---------- HEADER ---------- */
+  .hdr{
+    background:linear-gradient(155deg,#0d1b2a 0%,#13293d 55%,#1b3a52 100%);
+    color:#fff;padding:46px 56px 40px;position:relative;overflow:hidden;
+  }
+  .hdr::after{
+    content:"";position:absolute;right:-80px;top:-80px;width:340px;height:340px;
+    background:radial-gradient(circle,rgba(31,107,77,.35),transparent 70%);
+  }
+  .hdr::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--green);
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.32em;
+    text-transform:uppercase;color:#7fb3a0;font-weight:500;margin-bottom:18px;
+    display:flex;align-items:center;gap:14px;
+  }
+  .eyebrow span{height:1px;width:38px;background:#3f6e5c;display:inline-block}
+  .hdr h1{
+    font-family:'Fraunces',serif;font-weight:600;font-size:34px;line-height:1.18;
+    letter-spacing:-.01em;max-width:680px;position:relative;z-index:2;
+  }
+  .hdr h1 em{font-style:italic;color:#8fcfb4}
+  .hdr .sub{
+    margin-top:18px;font-size:14px;color:#b9c6cf;max-width:600px;position:relative;z-index:2;
+  }
+  .tagrow{margin-top:26px;display:flex;gap:10px;flex-wrap:wrap;position:relative;z-index:2}
+  .tag{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.06em;
+    border:1px solid rgba(255,255,255,.22);border-radius:2px;padding:6px 11px;color:#cdd8df;
+  }
+  /* ---------- BODY ---------- */
+  .body{padding:42px 56px 50px}
+  .section{margin-bottom:38px}
+  .sec-label{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--green);font-weight:600;margin-bottom:6px;
+    display:flex;align-items:baseline;gap:10px;
+  }
+  .sec-label b{color:var(--mute);font-weight:500}
+  .sec-title{font-family:'Fraunces',serif;font-size:23px;font-weight:600;color:var(--ink);margin-bottom:16px;letter-spacing:-.01em}
+  p{font-size:14.5px;color:var(--slate);margin-bottom:11px}
+  p strong{color:var(--ink);font-weight:600}
+  /* point A box */
+  .ab-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .panel{
+    background:var(--card);border:1px solid var(--line);border-radius:7px;padding:22px 24px;
+    box-shadow:0 1px 0 rgba(13,27,42,.03);
+  }
+  .panel.a{border-top:3px solid var(--red)}
+  .panel.b{border-top:3px solid var(--green)}
+  .panel h3{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--mute);margin-bottom:14px;font-weight:600;
+  }
+  .panel .big{font-family:'Fraunces',serif;font-size:15.5px;color:var(--ink);font-weight:500;line-height:1.4;margin-bottom:14px}
+  .kv{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;border-bottom:1px dotted var(--line);font-size:13.5px}
+  .kv:last-child{border-bottom:0}
+  .kv .k{color:var(--slate)}
+  .kv .v{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--ink)}
+  /* solution steps */
+  .steps{counter-reset:s;margin-top:6px}
+  .step{
+    display:flex;gap:18px;padding:16px 0;border-bottom:1px solid var(--line);
+  }
+  .step:last-child{border-bottom:0}
+  .step .n{
+    counter-increment:s;flex:0 0 34px;height:34px;border-radius:50%;
+    background:var(--navy);color:#fff;font-family:'IBM Plex Mono',monospace;font-weight:600;
+    display:flex;align-items:center;justify-content:center;font-size:14px;
+  }
+  .step .n::before{content:counter(s)}
+  .step .txt h4{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:4px}
+  .step .txt p{font-size:13.5px;margin-bottom:0}
+  .new-product{
+    margin-top:8px;background:var(--green-soft);border-left:3px solid var(--green);
+    border-radius:0 6px 6px 0;padding:14px 18px;font-size:13.5px;color:var(--navy);
+  }
+  .new-product b{color:var(--green)}
+  /* results table */
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:4px}
+  thead th{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--mute);font-weight:600;text-align:right;padding:11px 12px;border-bottom:2px solid var(--ink);
+  }
+  thead th:first-child{text-align:left}
+  tbody td{padding:11px 12px;text-align:right;border-bottom:1px solid var(--line);font-family:'IBM Plex Mono',monospace}
+  tbody td:first-child{text-align:left;font-family:'IBM Plex Sans',sans-serif;color:var(--slate)}
+  tbody tr:last-child td{border-bottom:0}
+  .delta-pos{color:var(--green);font-weight:600}
+  .delta-neg{color:var(--red);font-weight:600}
+  .delta-good{color:var(--green);font-weight:600} /* reduction that is good */
+  /* KPI strip */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:7px;overflow:hidden;margin-top:8px}
+  .kpi{background:var(--card);padding:20px 16px;text-align:center}
+  .kpi .num{font-family:'Fraunces',serif;font-size:30px;font-weight:600;color:var(--green);line-height:1}
+  .kpi .num.alt{color:var(--navy)}
+  .kpi .lbl{font-size:11.5px;color:var(--mute);margin-top:8px;line-height:1.35}
+  /* conclusion */
+  .concl{background:var(--navy);color:#dce6ec;border-radius:8px;padding:28px 30px;margin-top:8px;position:relative;overflow:hidden}
+  .concl::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--green)}
+  .concl h3{font-family:'Fraunces',serif;color:#fff;font-size:19px;font-weight:600;margin-bottom:14px}
+  .concl ul{list-style:none}
+  .concl li{padding:7px 0 7px 26px;position:relative;font-size:14px;border-bottom:1px solid rgba(255,255,255,.08)}
+  .concl li:last-child{border-bottom:0}
+  .concl li::before{content:"→";position:absolute;left:0;color:#8fcfb4;font-weight:700}
+  .concl li b{color:#fff}
+  /* role + footer */
+  .role{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:0 6px 6px 0;padding:16px 20px;margin-top:24px;font-size:13.5px;color:var(--slate)}
+  .role b{color:var(--ink)}
+  .ftr{display:flex;justify-content:space-between;align-items:center;padding:22px 56px;background:#0d1b2a;color:#7e93a0;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.05em}
+  .ftr .brand{color:#cdd8df;font-weight:600;letter-spacing:.18em}
+  .nda{font-size:11px;color:var(--mute);font-style:italic;margin-top:18px;font-family:'IBM Plex Sans',sans-serif}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="hdr">
+    <div class="eyebrow"><span></span>Кейс 01 · Корпоративное финансирование · МСБ</div>
+    <h1>Реструктуризация инвесткредита <em>нового производства</em>: запасы −27%, выручка +14% за полугодие без новых кредитов</h1>
+    <div class="sub">Перевод проблемного инвестиционного кредита в здоровое обслуживание и высвобождение оборотного капитала на старте производства — за счёт реструктуризации графика и факторинга с регрессом.</div>
+    <div class="tagrow">
+      <div class="tag">Кредитный анализ</div>
+      <div class="tag">Реструктуризация</div>
+      <div class="tag">Факторинг с регрессом</div>
+      <div class="tag">Оборотный капитал</div>
+    </div>
+  </header>
+
+  <div class="body">
+
+    <!-- ИСТОРИЯ -->
+    <div class="section">
+      <div class="sec-label">01 <b>/ Ситуация</b></div>
+      <div class="sec-title">Новое производство, не вышедшее на мощность в срок</div>
+      <p>Крупный иностранный поставщик обойного клея локализовал производство в России. Под проект создана отдельная компания (SPV) сегмента МСБ: приобретён имущественный комплекс, проведена реконструкция, в 2025 году запущен полный цикл — от сырья (модифицированный крахмал) до готовой продукции.</p>
+      <p><strong>Проблема:</strong> новый цех запустился на квартал позже плана. Компания не успевала набрать проектную мощность, за счёт которой планировалось обслуживать инвестиционный кредит. Возник риск выхода на просрочку — обслуживать долг из прибыли смежного направления собственник не хотел.</p>
+    </div>
+
+    <!-- A -> B -->
+    <div class="section">
+      <div class="ab-grid">
+        <div class="panel a">
+          <h3>Точка А · 01.01.2025</h3>
+          <div class="big">Кредитный портфель под давлением, оборотка «заморожена» в запасах</div>
+          <div class="kv"><span class="k">Инвестиционный кредит</span><span class="v">200 млн ₽</span></div>
+          <div class="kv"><span class="k">Оборотный кредит</span><span class="v">192 млн ₽</span></div>
+          <div class="kv"><span class="k">Запасы готовой продукции</span><span class="v">266 млн ₽</span></div>
+          <div class="kv"><span class="k">EBITDA LTM</span><span class="v">205 млн ₽</span></div>
+        </div>
+        <div class="panel b">
+          <h3>Точка Б · 30.06.2025</h3>
+          <div class="big">Долг реструктурирован, обслуживается без просрочек, запасы высвобождены</div>
+          <div class="kv"><span class="k">Краткосрочный кредит</span><span class="v">160 млн ₽</span></div>
+          <div class="kv"><span class="k">Запасы готовой продукции</span><span class="v">193 млн ₽</span></div>
+          <div class="kv"><span class="k">Выручка 1 пол. (г/г)</span><span class="v">754 млн ₽</span></div>
+          <div class="kv"><span class="k">EBITDA LTM</span><span class="v">211 млн ₽</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- РЕШЕНИЕ -->
+    <div class="section">
+      <div class="sec-label">02 <b>/ Решение</b></div>
+      <div class="sec-title">Что было сделано</div>
+      <div class="steps">
+        <div class="step">
+          <div class="n"></div>
+          <div class="txt">
+            <h4>Полный кредитный анализ и реструктуризация графика</h4>
+            <p>Перенос начала платежей по инвесткредиту на квартал и удлинение периода выборки — синхронизация выплат с реальным выходом цеха на проектную мощность.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n"></div>
+          <div class="txt">
+            <h4>Вынесение на кредитный комитет — положительное решение</h4>
+            <p>Обоснование изменения условий без увеличения совокупного лимита кредитного риска: речь шла о диверсификации продуктов, а не о наращивании долга.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n"></div>
+          <div class="txt">
+            <h4>Внедрён новый для клиента инструмент — факторинг с регрессом</h4>
+            <p>Производитель финансирует закупку своей продукции оптовыми покупателями: им даётся отсрочка до 70 дней, поручительство учитывается на забалансовом счёте 009. Объём — ~20% оборота (≈150 млн ₽).</p>
+          </div>
+        </div>
+      </div>
+      <div class="new-product">
+        <b>Логика для бизнеса:</b> факторинг — более дорогой капитал, чем банковский кредит, поэтому применялся точечно: <strong>~20% оборота (≈150 млн ₽)</strong> — там, где ускорение оборачиваемости важнее стоимости денег. Покупатели получили мгновенную отгрузку с отсрочкой, компания — оборотный капитал на закупку сырья без дополнительных вложений собственника. Этого хватило, чтобы высвободить запасы и частично заместить краткосрочный кредит без роста совокупной долговой нагрузки.
+      </div>
+    </div>
+
+    <!-- РЕЗУЛЬТАТЫ -->
+    <div class="section">
+      <div class="sec-label">03 <b>/ Результат · 6 месяцев</b></div>
+      <div class="sec-title">Динамика ключевых показателей</div>
+      <table>
+        <thead>
+          <tr><th>Показатель, млн ₽</th><th>01.01.2025</th><th>30.06.2025</th><th>Δ</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Запасы готовой продукции</td><td>266</td><td>193</td><td class="delta-good">−73 (−27%)</td></tr>
+          <tr><td>Выручка за полугодие (г/г)</td><td>663</td><td>754</td><td class="delta-pos">+91 (+14%)</td></tr>
+          <tr><td>Краткосрочный кредит</td><td>192</td><td>160</td><td class="delta-good">−32 (−17%)</td></tr>
+          <tr><td>Собственный оборотный капитал</td><td>443</td><td>471</td><td class="delta-pos">+28 (+6%)</td></tr>
+          <tr><td>Эффективность оборотки (Выручка / СОК)</td><td>1,50</td><td>1,60</td><td class="delta-pos">+7%</td></tr>
+        </tbody>
+      </table>
+      <div class="kpis">
+        <div class="kpi"><div class="num">−27%</div><div class="lbl">Запасы готовой продукции</div></div>
+        <div class="kpi"><div class="num">+14%</div><div class="lbl">Выручка год к году</div></div>
+        <div class="kpi"><div class="num">−17%</div><div class="lbl">Краткосрочный кредит</div></div>
+        <div class="kpi"><div class="num alt">0</div><div class="lbl">Просрочек по долгу</div></div>
+      </div>
+    </div>
+
+    <!-- ЗАКЛЮЧЕНИЕ -->
+    <div class="section">
+      <div class="sec-label">04 <b>/ Итог</b></div>
+      <div class="concl">
+        <h3>Проблемный кредит переведён в здоровый — без новой долговой нагрузки</h3>
+        <ul>
+          <li><b>Снят риск дефолта:</b> график синхронизирован с выходом цеха на мощность, долг обслуживается без просрочек</li>
+          <li><b>Высвобождена оборотка:</b> запасы −73 млн ₽, выручка +91 млн ₽ — больше отгрузок на тех же ресурсах</li>
+          <li><b>Диверсифицирована кредитная база:</b> факторинг частично заместил краткосрочный кредит без роста совокупного лимита</li>
+          <li><b>Создано рыночное преимущество:</b> удобная отсрочка покупателям усилила вывод нового продукта на рынок</li>
+        </ul>
+      </div>
+      <div class="role">
+        <b>Моя роль.</b> Кредитный анализ, реструктуризация графика и условий, защита на кредитном комитете, подбор и внедрение факторинга с регрессом, оценка эффекта на оборотный капитал и долговую нагрузку.
+      </div>
+      <div class="nda">Данные обезличены и приведены в относительных величинах в соответствии с требованиями конфиденциальности (NDA). Названия, отрасль и абсолютные значения изменены без искажения сути кейса.</div>
+    </div>
+
+  </div>
+
+  <footer class="ftr">
+    <div class="brand">FINDIR.MOSKVA</div>
+    <div>Кредитный анализ · Реструктуризация · Управление оборотным капиталом</div>
+  </footer>
+
+</div>
+</body>
+</html>
