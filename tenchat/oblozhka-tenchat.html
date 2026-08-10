@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Обложка профиля TenChat — Финдир.Москва</title>
+<style>
+/* ─────────────────────────────────────────────────────────────────────────
+   Обложка профиля TenChat. Система координат макета — 972 × 240 (CSS-пиксели),
+   рендер идёт с device_scale_factor=2, то есть PNG выходит 1944 × 480.
+
+   ⛔ ЗАПРЕТНАЯ ЗОНА: левые 220 × нижние 140 (в системе 972×240) — там аватар 160×160,
+   он накрывает нижний левый угол обложки. Внутри этого прямоугольника не должно быть
+   ничего значимого. Здесь она задана переменными --avatar-w / --avatar-h и от них
+   считается левый отступ колонки: контент начинается ПРАВЕЕ аватара на всей высоте.
+
+   Палитра и шрифты — не новые: сняты с боевой визуальной системы карточек FinDir
+   (content-factory/templates/stil.css), чтобы обложка читалась одной серией с каналом.
+   ───────────────────────────────────────────────────────────────────────── */
+
+:root{
+  /* палитра FinDir (эталон — stil.css) */
+  --fon:      #15181e;
+  --fon-verh: #171a1e;
+  --yantar:   #c7a35a;
+  --tekst:    #f4efe6;
+  --seryy:    #8c92a0;
+  --linia:    #2a3038;
+
+  /* геометрия TenChat (замеры) */
+  --avatar-w: 220px;   /* сколько аватар съедает слева */
+  --avatar-h: 140px;   /* сколько аватар съедает снизу  */
+
+  --pole-verh:  30px;
+  --pole-niz:   27px;
+  /* ⚠️ Правое поле = 111px не «для красоты». На мобильном TenChat обложка идёт
+     object-cover в контейнер ~375×120: источник 4,05:1 обрезается по бокам ровно
+     на 111px в координатах макета (посчитано, см. отчёт). Всё, что правее x=861,
+     на телефоне не существует. 127 = 111 + 16 px воздуха: на срезе ровно по 861
+     знак ₽ упирался в край кадра — видно на контроле 2. */
+  --pole-pravo: 127px;
+  --hrebet:     238px; /* x вертикальной янтарной линии — граница «фото | текст» */
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  width:972px; height:240px;
+  position:relative; overflow:hidden;
+  background:
+    radial-gradient(120% 190% at 88% 30%, rgba(199,163,90,.10) 0%, rgba(199,163,90,0) 62%),
+    linear-gradient(100deg, #12151a 0%, var(--fon) 42%, var(--fon-verh) 78%, #1b1f27 100%);
+  color:var(--tekst);
+  -webkit-font-smoothing:antialiased;
+  font-family:"PT Sans", -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Хребет: вертикальная янтарная линия на границе зоны аватара.
+   Не украшение — она объясняет пустоту слева и оформляет её как место под фотографию. */
+.hrebet{
+  position:absolute; left:var(--hrebet); top:0; bottom:0; width:2px;
+  background:linear-gradient(180deg,
+    rgba(199,163,90,0) 0%, rgba(199,163,90,.62) 26%,
+    rgba(199,163,90,.62) 74%, rgba(199,163,90,0) 100%);
+}
+
+/* Колонка контента. Левый край считается от хребта, а не «на глаз». */
+.kolonka{
+  position:absolute;
+  left:calc(var(--hrebet) + 28px);
+  right:var(--pole-pravo);
+  top:var(--pole-verh);
+  bottom:var(--pole-niz);
+  display:flex; flex-direction:column;
+}
+
+/* ── Верх: кто это ───────────────────────────────────────────────────────── */
+.metka{
+  font-family:"PT Mono", Menlo, monospace;
+  font-size:14.5px; letter-spacing:.185em; text-transform:uppercase;
+  display:flex; align-items:center; white-space:nowrap;
+}
+.metka::before{
+  content:""; width:.5em; height:.5em; border-radius:50%;
+  background:var(--yantar); flex:none; margin-right:.85em;
+}
+.metka .rol{ color:var(--yantar) }
+.metka .kanal{ color:var(--seryy); margin-left:.55em }
+
+/* ⛔ ПРАВИЛО ТЕКСТА, замечание Дмитрия 10.08.2026: в обложку НЕ СТАВИТЬ факты,
+   которые стареют сами. «16 лет опыта» через год становится враньём, а картинку
+   никто не вспомнит перерисовать — в отличие от текста профиля, который правится
+   за секунду. Годится: то, что только растёт («30+ проектов», «200+ млрд ₽»
+   — занижение остаётся правдой) и то, что вне времени («по ту сторону стола»).
+   ⛔ Не годится: возраст, стаж, «с 2010 года», текущая должность, число подписчиков. */
+
+/* ── Середина: тезис. Единственное громкое место макета ──────────────────── */
+.tezis{
+  flex:1; display:flex; flex-direction:column; justify-content:center;
+  font-family:"PT Serif", Georgia, serif; font-weight:700;
+  /* Кегль 41 держит тезис в две строки — при бюджете ~52 знака. Промежуточная
+     редакция 10.08.2026 была на 56 знаков: раскладывалась на три строки и слипалась
+     с соседями на 41, 36 и всём, кроме 34 (ловит проверка №4 в render.py).
+     Фраза сокращена до 42 знаков, третья строка ушла, кегль вернулся на 41.
+     ⚠️ Связку между половинами держит не знак, а глиф (см. .glif ниже) — тот же
+     элемент, что стоит между частями цитаты на карточках канала. Поэтому ни тире,
+     ни союза в тексте нет, и поджимать трекинг ради них не требуется. */
+  font-size:41px; line-height:1.17; letter-spacing:-.008em;
+  overflow-wrap:anywhere;
+}
+/* Противопоставление: первая часть светлым, вторая янтарём — формат карточек FinDir. */
+.tezis .vtoraya{ color:var(--yantar); display:block }
+
+/* Глиф между половинами тезиса — тот же элемент, что на карточках канала
+   (content-factory/templates/stil.css, форма «vybros» из kartochki.py: ровный ряд,
+   один штрих выше остальных). Форма выбрана ПЛОСКАЯ намеренно — «ritm» с разбросом
+   высот на этом кегле спорил с текстом и читался как продолжение букв. Здесь глиф
+   отыгрывает поворот фразы вместо знака препинания: и тире, и союз в начале строки
+   отвергнуты 10.08.2026 — строка не должна начинаться со служебного слова.
+   Размеры уменьшены пропорционально: карточка 1080 px, обложка 240.
+   ⚠️ Поля НЕ симметричны (15 сверху, −2 снизу) — и это не опечатка. Симметричные поля
+   давали просветы 12 и 20,5 px: глиф прижимался к верхней строке. Причина в том, что
+   коробка строки и её чернила — разные вещи: у верхней строки вниз уходит выносной
+   элемент «р», а нижняя сплошь строчная и начинается с высоты x, то есть её коробка
+   сверху пустая. Поля подобраны по ЧЕРНИЛАМ, снятым с готового PNG: 16,0 и 16,5 px.
+   ⛔ Правишь текст тезиса — меряй просветы заново, от набора букв они и зависят.
+   Сумма полей и высоты держится ровно на 26 px: блок влезает в макет впритык,
+   проверка №4 краснеет уже на 27. */
+.glif{ display:flex; align-items:flex-end; gap:5px; height:13px; margin:15px 0 -2px }
+.glif i{ width:4px; background:var(--yantar); border-radius:2px; display:block; flex:none }
+
+/* ── Низ: что делает (слева) и масштаб (справа) на одной строке ──────────── */
+.niz{
+  display:flex; align-items:baseline; justify-content:space-between;
+  gap:26px; white-space:nowrap;
+}
+.delo{
+  font-size:16.5px; color:rgba(244,239,230,.82); letter-spacing:.002em;
+}
+.masshtab{
+  font-family:"PT Mono", Menlo, monospace;
+  font-size:12.5px; letter-spacing:.04em; text-transform:uppercase;
+  color:var(--seryy);
+}
+.masshtab b{ color:var(--tekst); font-weight:400 }
+.masshtab .tochka{ color:#3d4450; margin:0 .32em }
+</style>
+</head>
+<body>
+
+  <div class="hrebet"></div>
+
+  <div class="kolonka">
+
+    <div class="metka">
+      <span class="rol">Внешний финансовый директор</span><span class="kanal">· ФИНДИР.МОСКВА</span>
+    </div>
+
+    <div class="tezis">
+      <span>Смотрю взглядом банкира</span>
+      <div class="glif"><i style="height:5px"></i><i style="height:5px"></i><i style="height:5px"></i><i style="height:5px"></i><i style="height:13px"></i><i style="height:5px"></i><i style="height:5px"></i><i style="height:5px"></i><i style="height:5px"></i></div>
+      <span class="vtoraya">вижу суть изнутри</span>
+    </div>
+
+    <div class="niz">
+      <span class="delo">Готовлю компанию и проекты к финансированию</span>
+      <span class="masshtab">
+        <!-- «сделок», а не «проектов»: слово «проекты» уже стоит слева в этой же
+             строке, повтор на одной линии цепляет глаз. Число то же самое. -->
+        <b>30+</b> сделок<span class="tochka">·</span><b>200+</b> млрд ₽
+      </span>
+    </div>
+
+  </div>
+
+</body>
+</html>
