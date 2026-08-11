@@ -128,11 +128,18 @@ body[data-p="kwork"] .holst{
   --av-w:0px; --av-h:0px;
   --hrebet:168px; --otstup:24px; --pole-pravo:168px;
   --pole-verh:16px; --pole-niz:15px;
-  --kegl-metka:11.5px; --kegl-tezis:25px; --kegl-delo:13px; --kegl-masshtab:11px;
+  /* 25px было ДО добавления тире: разделитель прибавил ~15 px ширины, и тезис вылез
+     за центральные 65 % на 2,4 px — поймала проверка, а не глаз. 24.2 возвращает запас. */
+  --kegl-metka:11.5px; --kegl-tezis:24.2px; --kegl-delo:13px; --kegl-masshtab:11px;
   --glif-h:0px; --glif-w:0px; --glif-gap:0px; --glif-pole:0;
 }
+/* ⛔ В двухстрочном макете поворот фразы отыгрывает глиф, и знак препинания там лишний.
+   В одну строку глиф не влезает — без разделителя половины слипаются в «банкира вижу»
+   и читаются как одно предложение (замечание Дмитрия 11.08.2026). Поэтому здесь тире,
+   янтарное: цвет тот же, что у второй половины, — разделитель принадлежит ей. */
 body[data-p="kwork"] .glif{ display:none }
-body[data-p="kwork"] .tezis .vtoraya{ display:inline; margin-left:.4em }
+body[data-p="kwork"] .tezis .vtoraya{ display:inline }
+body[data-p="kwork"] .tezis .vtoraya::before{ content:"—"; margin:0 .38em 0 .34em }
 body[data-p="kwork"] .tezis{ flex-direction:row; align-items:center; white-space:nowrap }
 
 /* ── LinkedIn: 792×198 CSS → 1584×396 PNG (штатный размер фона) ────────────
