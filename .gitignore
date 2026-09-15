@@ -1,2 +1,5 @@
 .DS_Store
 tenchat/*.png
+
+# worktree агентов Claude — рабочие копии, не содержимое репозитория
+.claude/worktrees/
