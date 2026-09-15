@@ -141,6 +141,12 @@ body[data-p="kwork"] .glif{ display:none }
 body[data-p="kwork"] .tezis .vtoraya{ display:inline }
 body[data-p="kwork"] .tezis .vtoraya::before{ content:"—"; margin:0 .38em 0 .34em }
 body[data-p="kwork"] .tezis{ flex-direction:row; align-items:center; white-space:nowrap }
+/* ⛔ Kwork 11.08.2026 скрыл шапку: «ФИНДИР.МОСКВА» читается как домен личного сайта,
+   а контакты и ссылки на сайты в шапке запрещены правилами площадки. Здесь метка —
+   только роль, без «· ФИНДИР.МОСКВА» (точка-разделитель живёт в том же span).
+   FL.ru — туда же: обмен контактами запрещён и там (соглашение п. 3.2.2, ред. 31.08.2026). */
+body[data-p="kwork"] .metka .kanal,
+body[data-p="fl"] .metka .kanal{ display:none }
 
 /* ── LinkedIn: 792×198 CSS → 1584×396 PNG (штатный размер фона) ────────────
    Аватар — круг в нижнем левом углу, накрывает низ баннера примерно
